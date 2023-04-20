@@ -5,6 +5,8 @@ import com.mysql.cj.protocol.Resultset;
 import javax.swing.*;
 import javax.swing.plaf.FontUIResource;
 
+import org.w3c.dom.css.ElementCSSInlineStyle;
+
 import java.awt.*;
 public class finalproject {
 
@@ -24,10 +26,11 @@ public class finalproject {
         int condition=1;
         while(condition==1){
             JOptionPane.showMessageDialog(null,
-            "ENTER 1 TO CREATE DATABASE \n\n"+
-            "ENTER 2 TO CREATE TABLE\n\n"+ 
-            "ENTER 3 TO INSERT DATA\n\n"+
-            "ENTER 4 TO DISPLAY DATA\n "+
+            "ENTER 1 TO CREATE DATABASE  .\n"+
+            "ENTER 2 TO CREATE TABLE .\n"+ 
+            "ENTER 3 TO INSERT DATA .\n"+
+            "ENTER 4 TO DISPLAY DATA .\n"+
+            "ENTER 5 FOR CUSTOM DISPLAY  .\n"+
             "          \nCHOOSE ABOVE CHOICES \n");
                 String abcd =JOptionPane.showInputDialog(null,"ENTER THE CHOICE ");   ///** */
                 choice=Integer.parseInt(abcd);    ///**** */
@@ -40,6 +43,8 @@ public class finalproject {
                 case 3:insertion();
                 break;
                 case 4:display();
+                break;
+                case 5: select();
                 break;
             }
             String abcdf=JOptionPane.showInputDialog(null, "ENTER 1 OR 0 TO CONTINUE :");
@@ -146,6 +151,33 @@ public class finalproject {
             st.close();
             con.close();
 
+        }
+        catch(Exception e){
+
+            JOptionPane.showMessageDialog(null, e,"----- WARNING BRO EXCEPTION HAI ---",JOptionPane.WARNING_MESSAGE);
+
+        }
+    }
+    public static void select(){
+        String username="root";
+        String password="abcde";
+        String url="jdbc:mysql://localhost:3306/";
+        String query=JOptionPane.showInputDialog("ENTER YOUR CUSTOM SELECTION QUERY");
+        try{
+
+            Connection con=DriverManager.getConnection(url, username, password);
+            Statement st=con.createStatement();
+            st.execute("use "+dbname);
+            ResultSet rs=st.executeQuery(query);
+            int i=1;
+
+            while(rs.next()){
+                JOptionPane.showMessageDialog(null,"   Record "+i+":\n"+
+                "Rollno  "+"Name  "+"Marks  \n"+
+                rs.getInt(1)+"        "+rs.getString(2)+"        "+rs.getInt(3)+"\n");
+                i++;
+            }
+            
         }
         catch(Exception e){
 
